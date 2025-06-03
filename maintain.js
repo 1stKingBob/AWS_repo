@@ -30,7 +30,7 @@ Description: ${issueDescription}
 
     const emailParams = {
       Destination: {
-        ToAddresses: ["test123@gmail.com"], // Replace with real recipient
+        ToAddresses: ["maintenance@gmail.com"], // Replace with real recipient
       },
       Message: {
         Body: {
@@ -40,7 +40,7 @@ Description: ${issueDescription}
           Data: `Maintenance Request: ${issueSubject}`,
         },
       },
-      Source: "test123@gmail.com", // Must be SES verified
+      Source: "maintenance@gmail.com", // Must be SES verified
     };
 
     await ses.send(new SendEmailCommand(emailParams));
