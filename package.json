@@ -1,0 +1,13 @@
+{
+  "name": "email-notifier",
+  "version": "1.0.0",
+  "description": "AWS Lambda function to send email notifications",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@aws-sdk/client-ses": "^3.500.0"
+  }
+}
