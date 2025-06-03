@@ -20,9 +20,9 @@ export const handler = async (event) => {
     `;
 
     const command = new ExecuteStatementCommand({
-      resourceArn: process.env.DB_CLUSTER_ARN,
-      secretArn: process.env.DB_SECRET_ARN,
-      database: process.env.DB_NAME,
+      resourceArn: process.env.DB_CLUSTER_ARN!,
+      secretArn: process.env.DB_SECRET_ARN!,
+      database: process.env.DB_NAME!,
       sql,
       parameters: [
         { name: "title", value: { stringValue: title } },
@@ -38,7 +38,7 @@ export const handler = async (event) => {
       body: JSON.stringify({ message: "Meeting scheduled successfully." }),
     };
   } catch (err) {
-    console.error(err);
+    console.error("Error inserting meeting:", err);
     return {
       statusCode: 500,
       body: JSON.stringify({ message: "Internal server error" }),
