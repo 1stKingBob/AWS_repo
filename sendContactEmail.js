@@ -5,30 +5,47 @@ const ses = new SESClient({ region: "ap-southeast-2" }); // Sydney region
 export const handler = async (event) => {
   try {
     const body = JSON.parse(event.body);
-    const { name, email, message } = body;
+    const {
+      name,
+      email,
+      unitNumber,
+      category,
+      message,
+      copyToEmail,
+    } = body;
 
-    if (!name || !email || !message) {
+    if (!name || !email || !unitNumber || !category || !message) {
       return {
         statusCode: 400,
-        body: JSON.stringify({ success: false, message: "Missing fields." }),
+        body: JSON.stringify({ success: false, message: "Missing required fields." }),
       };
     }
 
+    const committeeEmail = "test123@gmail.com";
+
+    const messageBody = `
+New contact form submission:
+
+Name: ${name}
+Email: ${email}
+Unit Number: ${unitNumber}
+Category: ${category}
+Message:
+${message}
+`;
+
     const emailParams = {
       Destination: {
-        ToAddresses: ["test123@gmail.com"], // Recipient
+        ToAddresses: ["stratacommittee@gmail.com"],
+        ...(copyToEmail ? { CcAddresses: [email] } : {}),
       },
       Message: {
         Body: {
-          Text: {
-            Data: `New message from ${name} (${email}):\n\n${message}`,
-          },
+          Text: { Data: messageBody },
         },
-        Subject: {
-          Data: "New Contact Form Submission",
-        },
+        Subject: { Data: `Contact Form Submission: ${category}` },
       },
-      Source: "test123@gmail.com", // Must be verified in SES
+      Source: "stratacommittee@gmail.com", // Must be a verified SES sender
     };
 
     await ses.send(new SendEmailCommand(emailParams));
