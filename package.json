@@ -1,13 +1,12 @@
 {
-  "name": "email-notifier",
+  "name": "strata-lambda-functions",
   "version": "1.0.0",
-  "description": "AWS Lambda function to send email notifications",
-  "main": "index.js",
+  "description": "Lambda functions for contact emails and maintenance requests",
   "type": "module",
   "scripts": {
-    "start": "node index.js"
+    "start": "node sendContactEmail.js"
   },
   "dependencies": {
-    "@aws-sdk/client-ses": "^3.500.0"
+    "@aws-sdk/client-ses": "^3.528.0"
   }
 }
